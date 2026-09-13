@@ -6,10 +6,14 @@ package com.example.api_produtos.Dto;
 public class UsuarioResponseDTO {
     private Long id;
     private String nome;
+    private String token;
     
-    public UsuarioResponseDTO(Long id,String nome){
+   
+
+    public UsuarioResponseDTO(Long id,String nome,String token){
         this.nome = nome;
         this.id = id;
+        this.token = token;
     }
 
     public Long getId() {
@@ -18,5 +22,8 @@ public class UsuarioResponseDTO {
 
     public String getNome() {
         return nome;
+    }
+     public String getToken() {
+        return token;
     }
 }

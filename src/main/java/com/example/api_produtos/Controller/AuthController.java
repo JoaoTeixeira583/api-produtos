@@ -3,6 +3,7 @@ package com.example.api_produtos.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api_produtos.Config.JwtService;
 import com.example.api_produtos.Dto.UsuarioResponseDTO;
 import com.example.api_produtos.Entity.Usuario;
 import com.example.api_produtos.Service.UsuarioService;
@@ -19,14 +20,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/auth")
 public class AuthController {
     private final UsuarioService usuarioService;
+    private final JwtService jwtService;
 
-    public AuthController(UsuarioService usuarioService){
+    public AuthController(UsuarioService usuarioService,JwtService jwtService){
         this.usuarioService = usuarioService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
-    public Usuario criarUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.registrar(usuario);
+    public UsuarioResponseDTO criarUsuario(@RequestBody Usuario usuario) {
+        Usuario usuarioSalvo =  usuarioService.registrar(usuario);
+        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO(usuarioSalvo.getId(), usuarioSalvo.getNome(),null);
+        return  usuarioResponseDTO;
     }
 
     @PostMapping("/login")
@@ -35,7 +40,8 @@ public class AuthController {
         Optional<Usuario>resultado = usuarioService.login(usuario);
         if(resultado.isPresent()){
             Usuario usuarioEncontrado = resultado.get();
-            return ResponseEntity.ok(new UsuarioResponseDTO(usuarioEncontrado.getId(), usuarioEncontrado.getNome()));
+            String gerarToken = jwtService.gerarToken(usuarioEncontrado.getNome());
+            return ResponseEntity.ok(new UsuarioResponseDTO(usuarioEncontrado.getId(), usuarioEncontrado.getNome(), gerarToken));
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
