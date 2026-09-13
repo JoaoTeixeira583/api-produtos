@@ -1,11 +1,12 @@
-package com.example.api_produtos;
+package com.example.api_produtos.Service;
 
 import java.util.List;
 
 
 import org.springframework.stereotype.Service;
 
-
+import com.example.api_produtos.Entity.Produto;
+import com.example.api_produtos.Repository.ProdutoRepository;
 import com.example.api_produtos.exception.ProdutoNaoEncontradoException;
 
 // Service representa uma classe da lógica da aplicação gerenciada pelo Spring.

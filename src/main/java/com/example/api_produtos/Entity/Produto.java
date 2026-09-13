@@ -1,4 +1,4 @@
-package com.example.api_produtos;
+package com.example.api_produtos.Entity;
 
 
 import jakarta.persistence.Entity;

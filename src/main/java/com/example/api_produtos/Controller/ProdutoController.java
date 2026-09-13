@@ -1,4 +1,4 @@
-package com.example.api_produtos;
+package com.example.api_produtos.Controller;
 
 
 import java.util.List;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.api_produtos.Entity.Produto;
+import com.example.api_produtos.Service.ProdutoService;
 import com.example.api_produtos.exception.ProdutoNaoEncontradoException;
 
 import org.springframework.web.bind.annotation.PostMapping;
